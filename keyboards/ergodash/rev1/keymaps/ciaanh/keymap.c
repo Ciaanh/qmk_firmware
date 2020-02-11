@@ -1,220 +1,213 @@
 #include QMK_KEYBOARD_H
+#include "ciaanh.h"
 
 enum layers { _QWERTY, _LOWER, _RAISE, _ADJUST };
 
-enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST, REFORMAT, COMM, UNCOMM };
+enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST };
 
 
-#define _SAVE    LCTL(KC_S)
-#define _CUT    LCTL(KC_X)
-#define _COPY    LCTL(KC_C)
-#define _PASTE    LCTL(KC_V)
-
-#define VSC_FRM LSFT(LALT(KC_F))
-#define VSC_TRM LCTL(KC_GRV)
-#define VSC_COM LCTL(KC_P)
-
-#define VS_INT  LALT(KC_ENT)
-#define VS_QW   LSFT(KC_F9)
-#define VS_PEEK LALT(KC_F12)
-#define VS_FREF LSFT(KC_F12)
-#define VS_GREF LCTL(KC_F12)
-
-
+#define EISU LALT(KC_GRV)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Keymap: QWERTY
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * |  ESC   |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    |  PScr  |
+     * | ESC/~  |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    | Pscree |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * |  Tab   |   Q    |  W   |  E   |  R   |  T   |   /  |           |  \   |   Y  |   U  |   I  |   O  |   P    |   Del  |
+     * | `      |   K01  |  K02 |  K03 |  K04 |  K05 |   -  |           |  =   |  K06 |  K07 |  K08 |  K09 |  K0A   |   \    |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * | CapsL  |   A    |  S   |  D   |  F   |  G   |   '  |           |  `   |   H  |   J  |   K  |   L  |   =    |  Home  |
+     * | Tab    |   K11  |  K12 |  K13 |  K14 |  K15 |   {  |           |  }   |  K16 |  K17 |  K18 |  K19 |  K1A   |   "    |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
-     * | LShift |   Z    |  X   |  C   |  V   |  B   |                         |   N  |   M  |   ,  |   .  |   UP   |  End   |
+     * | LShift |   K21  |  K22 |  K23 |  K24 |  K25 |                         |  K26 |  K27 |  K28 |  K29 |  K2A   | RShift |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
-     * | LCtrl  |   GUI  | LAlt | RAlt |                                                     | Menu | LEFT |  DOWN  | RIGHT  |
+     * | LCtrl  |   GUI  |  Alt |  Alt |                                                     | LEFT | DOWN |   UP   | RIGHT  |
      * `-------------------------------'                                                     `-------------------------------'
      *                                       ,--------------.           ,--------------.
-     *                                       | SCLN |       |           |      | Minus |
-     *                               ,-------|   /  | Bksp  |           | Spc  +   /   +-------.
-     *                               | Lower | Enter|       |           |      | Enter | Raise |
+     *                                       | Lower|       |           |      | Raise |
+     *                               ,-------|   /  |  Del  |           | Bksp +   /   +-------.
+     *                               |CMD/Spc| Space|       |           |      | Enter |CMD/Spc|
      *                               `----------------------'           `----------------------'
      */
     [_QWERTY] = LAYOUT( \
-        KC_ESC , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LBRC,                                        KC_RBRC,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_PSCR, \
-         KC_TAB, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_SLSH,                                        KC_BSLS,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_DEL, \
-        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_QUOT,                                        KC_GRAVE,   KC_H,    KC_J,    KC_K,    KC_L,  KC_EQL, KC_HOME, \
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_SCLN,                      KC_MINS,             KC_N,    KC_M, KC_COMM,  KC_DOT,   KC_UP,  KC_END, \
-        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT,                     LOWER,  KC_ENT, KC_BSPC,     KC_SPC,  KC_ENT,   RAISE,                    KC_APP, KC_LEFT, KC_DOWN, KC_RGHT  \
+        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LBRC,                        KC_RBRC, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_PSCR, \
+        KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_MINS,                        KC_EQL , KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
+        KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_DEL ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+        KC_LCTL, KC_LGUI, KC_LALT, EISU,             LOWER,   KC_SPC ,KC_DEL,         KC_BSPC,KC_ENT , RAISE,            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
     ),
 
 
     /* Keymap: LOWER
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * |Sft F12 |   F12  |      |      |  F5  |      |      |           |      |  F1  |  F2  |  F3  |  F4  |        |        |
+     * | ESC    |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    | Pscree |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * | F12    |   F9   | F10  | F11  |  F8  |      | COMM |           |      |  F5  |  F6  |  F7  |  F8  |        |        |
+     * | `      |   K01  |  K02 |  K03 |  K04 |  K05 |   -  |           |  =   |  K06 |  K07 |  K08 |  K09 |  K0A   |   \    |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * | Ctl F12| Sft F9 | SAVE | C K E| A S F| Ctl `|UNCOMM|           |      |  F9  | F10  | F11  | F12  |        |        |
+     * | Tab    |   K11  |  K12 |  K13 |  K14 |  K15 |   {  |           |  }   |  K16 |  K17 |  K18 |  K19 |  K1A   |   "    |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
-     * | Alt ENT|        | CUT  | COPY | PASTE| Ctl P|                         |      |      |      |      |        |        |
+     * | LShift |   K21  |  K22 |  K23 |  K24 |  K25 |                         |  K26 |  K27 |  K28 |  K29 |  K2A   | RShift |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
-     * |        |        |      |      |                                                     |      |      |        |        |
+     * | LCtrl  |   GUI  |  Alt |  Alt |                                                     | LEFT | DOWN |   UP   | RIGHT  |
      * `-------------------------------'                                                     `-------------------------------'
      *                                       ,--------------.           ,--------------.
-     *                                       |      |       |           |      |       |
-     *                               ,-------|   /  |       |           |      +   /   +-------.
-     *                               | Lower |      |       |           |      |       | Raise |
+     *                                       | Lower|       |           |      | Raise |
+     *                               ,-------|   /  |  Del  |           | Bksp +   /   +-------.
+     *                               |CMD/Spc| Space|       |           |      | Enter |CMD/Spc|
      *                               `----------------------'           `----------------------'
      */
-
     [_LOWER] = LAYOUT(
-        VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
-         KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
-        VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
-         VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
-
+        KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_LCBR,                        KC_RCBR, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,  \
+        KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_UNDS,                        KC_PLUS, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE, \
+        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_DQT , \
+        KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,    KC_LT,   KC_GT,   KC_QUES, KC_RSFT, \
+        KC_LCTL, KC_LGUI, KC_LALT, EISU,             LOWER,   KC_SPC ,KC_DEL,         KC_BSPC,KC_ENT , RAISE,            KC_HOME, KC_PGDN, KC_PGUP, KC_END   \
     ),
-  
+
 
     /* Keymap: RAISE
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * | ESC    |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    | Pscree |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * | `      |   K01  |  K02 |  K03 |  K04 |  K05 |   -  |           |  =   |  K06 |  K07 |  K08 |  K09 |  K0A   |   \    |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * | Tab    |   K11  |  K12 |  K13 |  K14 |  K15 |   {  |           |  }   |  K16 |  K17 |  K18 |  K19 |  K1A   |   "    |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
-     * |        |        |      |      |      |      |                         |      |      |      |      |        |        |
+     * | LShift |   K21  |  K22 |  K23 |  K24 |  K25 |                         |  K26 |  K27 |  K28 |  K29 |  K2A   | RShift |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
-     * |        |        |      |      |                                                     |      |      |        |        |
+     * | LCtrl  |   GUI  |  Alt |  Alt |                                                     | LEFT | DOWN |   UP   | RIGHT  |
      * `-------------------------------'                                                     `-------------------------------'
      *                                       ,--------------.           ,--------------.
-     *                                       |      |       |           |      |       |
-     *                               ,-------|   /  |       |           |      +   /   +-------.
-     *                               | Lower |      |       |           |      |       | Raise |
+     *                                       | Lower|       |           |      | Raise |
+     *                               ,-------|   /  |  Del  |           | Bksp +   /   +-------.
+     *                               |CMD/Spc| Space|       |           |      | Enter |CMD/Spc|
      *                               `----------------------'           `----------------------'
      */
-     [_RAISE] = LAYOUT(
-        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
-        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
-        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
-        _______, _______, _______, _______, _______, _______,          _______,                      _______,          _______, _______, _______, _______, _______, _______, \
-        _______, _______, _______, _______,                   _______, _______, _______,    _______, _______, _______,                   _______, _______, _______, _______  \
+    [_RAISE] = LAYOUT(
+        KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_LCBR,                        KC_RCBR, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,  \
+        KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_UNDS,                        KC_PLUS, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE, \
+        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_DEL ,                        KC_BSPC, KC_H,    KC_J,    KC_K,    KC_L,    KC_COLN, KC_DQT , \
+        KC_LSFT, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_SPC ,                        KC_ENT , KC_N,    KC_M,    KC_LT,   KC_GT,   KC_QUES, KC_RSFT, \
+        KC_LCTL, KC_LGUI, KC_LALT, EISU,             LOWER,   KC_SPC ,KC_DEL,         KC_BSPC,KC_ENT , RAISE,            KC_HOME, KC_PGDN, KC_PGUP, KC_END   \
     ),
 
 
     /* Keymap: ADJUST
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * | RESET  |BLToggle| Step | Inc  | Dec  | Britg|      |           |      |      |      |      |      |        |        |
+     * | ESC    |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    | Pscree |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * |        |RGBToggl|Hue I |Sat I |Va I  | SPI  |Plain |           |      |      |      |      |      |        |        |
+     * | `      |   K01  |  K02 |  K03 |  K04 |  K05 |   -  |           |  =   |  K06 |  K07 |  K08 |  K09 |  K0A   |   \    |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * |        |        |Hue D |Sat D |Va D  | SPD  |Breath|           |      |      |      |      |      |        |        |
+     * | Tab    |   K11  |  K12 |  K13 |  K14 |  K15 |   {  |           |  }   |  K16 |  K17 |  K18 |  K19 |  K1A   |   "    |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
-     * |        |        |      |      |      |      |                         |      |      |      |      |        |        |
+     * | LShift |   K21  |  K22 |  K23 |  K24 |  K25 |                         |  K26 |  K27 |  K28 |  K29 |  K2A   | RShift |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
-     * |        |        |      |      |                                                     |      |      |        |        |
+     * | LCtrl  |   GUI  |  Alt |  Alt |                                                     | LEFT | DOWN |   UP   | RIGHT  |
      * `-------------------------------'                                                     `-------------------------------'
      *                                       ,--------------.           ,--------------.
-     *                                       |      |       |           |      |       |
-     *                               ,-------|   /  |       |           |      +   /   +-------.
-     *                               | Lower |      |       |           |      |       | Raise |
+     *                                       | Lower|       |           |      | Raise |
+     *                               ,-------|   /  |  Del  |           | Bksp +   /   +-------.
+     *                               |CMD/Spc| Space|       |           |      | Enter |CMD/Spc|
      *                               `----------------------'           `----------------------'
      */
-     [_ADJUST] = LAYOUT(
-          RESET, BL_TOGG, BL_STEP,  BL_INC,  BL_DEC, BL_BRTG,   KC_NO,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_M_P,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, RGB_M_B,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+    [_ADJUST] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,_______,                       _______, _______, _______, _______, _______, _______, _______, \
+        _______, RESET  , RGB_TOG, RGB_MOD, RGB_HUD, RGB_HUI,_______,                       _______, RGB_SAD, RGB_SAI, RGB_VAD, RGB_VAI, _______, _______, \
+        _______, _______, BL_TOGG, BL_BRTG, BL_INC , BL_DEC ,_______,                       _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,_______,                       _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______,          _______,_______,_______,       _______,_______, _______,          _______, _______, _______, _______  \
     )
+
+
+
 };
 
 
 
 
-// void persistent_default_layer_set(uint16_t default_layer) {
-//   eeconfig_update_default_layer(default_layer);
-//   default_layer_set(default_layer);
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+void persistent_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
+
+
+
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
 
-    case QWERTY:
-        if (record->event.pressed) {
-            print("mode just switched to qwerty and this is a huge string\n");
-            set_single_persistent_default_layer(_QWERTY);
-        }
+
+    case CSTM_0:
+        SHIFT_DU(KEY_SHIFT(9), KEY(0));
         return false;
-        break;
+
+
+
+    case QWERTY:
+      if (record->event.pressed) {
+         print("mode just switched to qwerty and this is a huge string\n");
+        set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+      break;
+
+
+
 
     case LOWER:
-        if (record->event.pressed) {
-            layer_on(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        return false;
-        break;
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+
+
 
     case RAISE:
-        if (record->event.pressed) {
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        return false;
-        break;
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+
+
 
     case ADJUST:
-        if (record->event.pressed) {
-            layer_on(_ADJUST);
-        } else {
-            layer_off(_ADJUST);
-        }
-        return false;
-        break;
+      if (record->event.pressed) {
+        layer_on(_ADJUST);
+      } else {
+        layer_off(_ADJUST);
+      }
+      return false;
+      break;
 
-    case REFORMAT:
-        if (record->event.pressed) {
-            // when keycode REFORMAT is pressed
-            SEND_STRING(SS_LCTL("ke"));
-        } else {
-            // when keycode REFORMAT is released
-        }
-        break;
 
-    case COMM:
-        if (record->event.pressed) {
-            // when keycode REFORMAT is pressed
-            SEND_STRING(SS_LCTL("kc"));
-        } else {
-            // when keycode REFORMAT is released
-        }
-        break;
-
-    case UNCOMM:
-        if (record->event.pressed) {
-            // when keycode REFORMAT is pressed
-            SEND_STRING(SS_LCTL("ku"));
-        } else {
-            // when keycode REFORMAT is released
-        }
-        break;
 
   }
   return true;
