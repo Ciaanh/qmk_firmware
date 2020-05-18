@@ -2,16 +2,19 @@
 
 enum layers { _QWERTY, _LOWER, _RAISE, _ADJUST };
 
-enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST, MACRO };
+enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST, REFORMAT, COMM, UNCOMM };
 
 
 #define _SAVE    LCTL(KC_S)
+#define _CUT    LCTL(KC_X)
+#define _COPY    LCTL(KC_C)
+#define _PASTE    LCTL(KC_V)
 
 #define VSC_FRM LSFT(LALT(KC_F))
 #define VSC_TRM LCTL(KC_GRV)
 #define VSC_COM LCTL(KC_P)
 
-#define VS_INT  LCTL(KC_SCLN)
+#define VS_INT  LALT(KC_ENT)
 #define VS_QW   LSFT(KC_F9)
 #define VS_PEEK LALT(KC_F12)
 #define VS_FREF LSFT(KC_F12)
@@ -24,41 +27,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Keymap: QWERTY
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * | ESC/~  |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    |  PScr  |
+     * |  ESC   |   1    |   2  |   3  |   4  |   5  |   [  |           |  ]   |   6  |   7  |   8  |   9  |   0    |  PScr  |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * | Tab    |   Q    |  W   |  E   |  R   |  T   |   (  |           |  )   |   Y  |   U  |   I  |   O  |   P    |   Del  |
+     * |  Tab   |   Q    |  W   |  E   |  R   |  T   |   /  |           |  \   |   Y  |   U  |   I  |   O  |   P    |   Del  |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * | LCtrl  |   A    |  S   |  D   |  F   |  G   |   /  |           |  \   |   H  |   J  |   K  |   L  |   =    |  Home  |
+     * | CapsL  |   A    |  S   |  D   |  F   |  G   |   '  |           |  `   |   H  |   J  |   K  |   L  |   =    |  Home  |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
      * | LShift |   Z    |  X   |  C   |  V   |  B   |                         |   N  |   M  |   ,  |   .  |   UP   |  End   |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
-     * | LAlt   |   GUI  | RAlt | Enter|                                                     | Menu | LEFT |  DOWN  | RIGHT  |
+     * | LCtrl  |   GUI  | LAlt | RAlt |                                                     | Menu | LEFT |  DOWN  | RIGHT  |
      * `-------------------------------'                                                     `-------------------------------'
      *                                       ,--------------.           ,--------------.
      *                                       | SCLN |       |           |      | Minus |
      *                               ,-------|   /  | Bksp  |           | Spc  +   /   +-------.
-     *                               | Lower | QUOT |       |           |      | Enter | Raise |
+     *                               | Lower | Enter|       |           |      | Enter | Raise |
      *                               `----------------------'           `----------------------'
      */
     [_QWERTY] = LAYOUT( \
-        KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LBRC,                                        KC_RBRC,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_PSCR, \
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_LPRN,                                        KC_RPRN,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_DEL, \
-        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_SLSH,                                        KC_BSLS,    KC_H,    KC_J,    KC_K,    KC_L,  KC_EQL, KC_HOME, \
+        KC_ESC , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LBRC,                                        KC_RBRC,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_PSCR, \
+        K C_TAB, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_SLSH,                                        KC_BSLS,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_DEL, \
+        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_QUOT,                                        KC_GRAVE,   KC_H,    KC_J,    KC_K,    KC_L,  KC_EQL, KC_HOME, \
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_SCLN,                      KC_MINS,             KC_N,    KC_M, KC_COMM,  KC_DOT,   KC_UP,  KC_END, \
-        KC_LALT, KC_LGUI, KC_RALT, KC_ENT,                      LOWER, KC_QUOT, KC_BSPC,     KC_SPC,  KC_ENT,   RAISE,                    KC_APP, KC_LEFT, KC_DOWN, KC_RGHT  \
+        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT,                     LOWER,  KC_ENT, KC_BSPC,     KC_SPC,  KC_ENT,   RAISE,                    KC_APP, KC_LEFT, KC_DOWN, KC_RGHT  \
     ),
 
 
     /* Keymap: LOWER
      *
      * ,----------------------------------------------------.           ,----------------------------------------------------.
-     * |Peek def|   F12  |  F9  |Sft F9|      |      |      |           |      |  F1  |  F2  |  F3  |  F4  |        |        |
+     * |Sft F12 |   F12  |      |      |  F5  |      |      |           |      |  F1  |  F2  |  F3  |  F4  |        |        |
      * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-     * | Ctl ;  | Sft F12| F10  | F11  |  F8  |  F5  |      |           |      |  F5  |  F6  |  F7  |  F8  |        |        |
+     * | F12    |   F9   | F10  | F11  |  F8  |      | COMM |           |      |  F5  |  F6  |  F7  |  F8  |        |        |
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
-     * |        | Ctl F12| C K E| Ctl S| A S F| Ctl `|      |           |      |  F9  | F10  | F11  | F12  |        |        |
+     * | Ctl F12| Sft F9 | SAVE | C K E| A S F| Ctl `|UNCOMM|           |      |  F9  | F10  | F11  | F12  |        |        |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
-     * |        |        |      |      |      | Ctl P|                         |      |      |      |      |        |        |
+     * | Alt ENT|        | CUT  | COPY | PASTE| Ctl P|                         |      |      |      |      |        |        |
      * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
      * |        |        |      |      |                                                     |      |      |        |        |
      * `-------------------------------'                                                     `-------------------------------'
@@ -70,14 +73,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_LOWER] = LAYOUT(
-        VS_PEEK,  KC_F12,   KC_F9,   VS_QW,   KC_NO,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
-         VS_INT, VS_FREF,  KC_F10,  KC_F11,   KC_F8,   KC_F5,   KC_NO,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
-          KC_NO, VS_GREF,   MACRO,   _SAVE, VSC_FRM, VSC_TRM,   KC_NO,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+        VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
+         KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
+        VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
+         VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
           KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
 
     ),
-
+  
 
     /* Keymap: RAISE
      *
@@ -186,12 +189,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
         break;
 
-    case MACRO:
+    case REFORMAT:
         if (record->event.pressed) {
-            // when keycode MACRO is pressed
+            // when keycode REFORMAT is pressed
             SEND_STRING(SS_LCTL("ke"));
         } else {
-            // when keycode MACRO is released
+            // when keycode REFORMAT is released
+        }
+        break;
+
+    case COMM:
+        if (record->event.pressed) {
+            // when keycode REFORMAT is pressed
+            SEND_STRING(SS_LCTL("kc"));
+        } else {
+            // when keycode REFORMAT is released
+        }
+        break;
+
+    case UNCOMM:
+        if (record->event.pressed) {
+            // when keycode REFORMAT is pressed
+            SEND_STRING(SS_LCTL("ku"));
+        } else {
+            // when keycode REFORMAT is released
         }
         break;
 
