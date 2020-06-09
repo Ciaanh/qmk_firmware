@@ -19,12 +19,17 @@
 // wiring of each half
 #define MATRIX_ROW_PINS { B7, D5, C7, F1, F0 }
 #define MATRIX_COL_PINS { D3, D2, D4, C6, D7, E6, B4, B6, B2, B3, B1, F7, F6, F5, F4 }
+#define UNUSED_PINS
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
 /* define tapping term */
 #define TAPPING_TERM 120
+
+#ifdef OLED_DRIVER_ENABLE
+  #define OLED_DISPLAY_128X64
+#endif
 
 #ifdef BACKLIGHT_ENABLE
     #define BACKLIGHT_PIN B5
@@ -34,10 +39,15 @@
 #ifdef RGBLIGHT_ENABLE
     /* ws2812 RGB LED */
     #define RGB_DI_PIN B0
-    #define RGBLIGHT_ANIMATIONS
-    #define RGBLED_NUM 24
-
+    #define RGBLED_NUM 4
     #define RGBLIGHT_LED_MAP { 0,  1,  2,  3}
+
+    #define RGBLIGHT_ANIMATIONS
+    #define RGBLIGHT_HUE_STEP 8
+    #define RGBLIGHT_SAT_STEP 8
+    #define RGBLIGHT_VAL_STEP 8
+
+    #define OLED_FONT_H "lib/oledfont.c"
 #endif
 
 /* Set 0 if debouncing isn't needed */
@@ -48,15 +58,3 @@
 /* Locking resynchronize hack */
 #define LOCKING_RESYNC_ENABLE
 
-
-// #define USE_I2C
-// #define SOFT_SERIAL_PIN D0
-// #define SELECT_SOFT_SERIAL_SPEED 1
-/*Sets the protocol speed when using serial communication*/
-//Speeds:
-//0: about 189kbps (Experimental only)
-//1: about 137kbps (default)
-//2: about 75kbps
-//3: about 39kbps
-//4: about 26kbps
-//5: about 20kbps

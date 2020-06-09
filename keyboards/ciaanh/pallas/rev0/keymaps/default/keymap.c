@@ -1,48 +1,323 @@
-// this is the style you want to emulate.
-// This is the canonical layout file for the Quantum project. If you want to add another keyboard,
-
 #include QMK_KEYBOARD_H
 
-// Each layer gets a name for readability, which is then used in the keymap matrix below.
-// The underscores don't mean anything - you can have a layer called STUFF or any other name.
-// Layer names don't all need to be of the same length, obviously, and you can also skip them
-// entirely and just use numbers.
-#define _DEFAULT 0
-#define _NAV 1
-#define _RESET 2
+enum layers { _QWERTY, _LOWER, _RAISE, _ADJUST };
+
+enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST, REFORMAT, COMM, UNCOMM };
+
+
+#define _SAVE    LCTL(KC_S)
+#define _CUT    LCTL(KC_X)
+#define _COPY    LCTL(KC_C)
+#define _PASTE    LCTL(KC_V)
+
+#define VSC_FRM LSFT(LALT(KC_F))
+#define VSC_TRM LCTL(KC_GRV)
+#define VSC_COM LCTL(KC_P)
+
+#define VS_INT  LALT(KC_ENT)
+#define VS_QW   LSFT(KC_F9)
+#define VS_PEEK LALT(KC_F12)
+#define VS_FREF LSFT(KC_F12)
+#define VS_GREF LCTL(KC_F12)
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_DEFAULT] = LAYOUT( /* qwerty */
-    KC_ESC,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS ,
-    KC_BSLS,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RBRC ,
-    KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT ,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LBRC ,
-    KC_LCTL,  KC_LGUI, KC_LALT, KC_GRV,  MO(_NAV),KC_BSPC, KC_DEL,   KC_ENT,   KC_SPC,  KC_EQL,  KC_MINS, KC_QUOT, KC_ENT,  KC_RGUI
-  ),
 
-  [_NAV] = LAYOUT(
-    TO(_DEFAULT),  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11  ,
-    KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_F12,  KC_TRNS, KC_UP,   KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS ,
-    TO(_RESET),    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-  ),
+    /* Keymap: QWERTY
+     *
+     * ,-----------------------------------------------------                                                ----------------------------------------------------------------.
+     * |   `    |   1    |   2  |   3  |   4  |  5   |   6  |                                                |   7  |   8  |   9  |   0    |        |      |        |        |
+     * |--------+--------+------+------+------+------+------+            +------+------+------+              +------+------+------+--------+--------+------+--------+--------|
+     * |  Tab   |   Q    |  W   |  E   |  R   |  T   |      |            |      |      |      |              |      |      |      |        |        |      |        |        |
+     * |--------+--------+------+------+------+------+------+            +------+------+------+              +------+------+------+--------+--------+------+--------+--------|
+     * | CapsL  |   A    |  S   |  D   |  F   |      |      |            |      |      |      |              |      |      |      |        |        |      |        |        |
+     * |--------+--------+------+------+------+------+------+            +------+------+------+              +------+------+------+--------+--------+------+--------+--------|
+     * | LShift |   Z    |  X   |  C   |  V   |      |      |            |      |      |      |              |      |      |      |        |        |      |        |        |
+     * |--------+--------+------+------+------+------+------+            +------+------+------+              +------+------+------+--------+--------+------+--------+--------|
+     * | LCtrl  |   GUI  | LAlt | RAlt |      |      |      |            |      |      |      |              |      |      |      |        |        |      |        |        |
+     * `-----------------------------------------------------            ----------------------              ----------------------------------------------------------------'
+     */
+    [_QWERTY] = LAYOUT( \
+        KC_ESC , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LBRC,                                        KC_RBRC,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_PSCR, \
+         KC_TAB, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_SLSH,                                        KC_BSLS,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_DEL, \
+        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_QUOT,                                        KC_GRAVE,   KC_H,    KC_J,    KC_K,    KC_L,  KC_EQL, KC_HOME, \
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,             KC_SCLN,                      KC_MINS,             KC_N,    KC_M, KC_COMM,  KC_DOT,   KC_UP,  KC_END, \
+        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT,                     LOWER,  KC_ENT, KC_BSPC,     KC_SPC,  KC_ENT,   RAISE,                    KC_APP, KC_LEFT, KC_DOWN, KC_RGHT  \
+    ),
 
-  [_RESET] = LAYOUT(
-    TO(_DEFAULT),  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   ,
-    KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   ,
-    KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   ,
-    KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   ,
-    KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,  KC_NO  ,  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , RESET
-  )
 
-  /*
-  [_TRNS] = LAYOUT(
-    KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS ,
-    KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-  ),
-  */
+    /* Keymap: LOWER
+     *
+     * ,----------------------------------------------------.           ,----------------------------------------------------.
+     * |Sft F12 |   F12  |      |      |  F5  |      |      |           |      |  F1  |  F2  |  F3  |  F4  |        |        |
+     * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
+     * | F12    |   F9   | F10  | F11  |  F8  |      | COMM |           |      |  F5  |  F6  |  F7  |  F8  |        |        |
+     * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
+     * | Ctl F12| Sft F9 | SAVE | C K E| A S F| Ctl `|UNCOMM|           |      |  F9  | F10  | F11  | F12  |        |        |
+     * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
+     * | Alt ENT|        | CUT  | COPY | PASTE| Ctl P|                         |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
+     * |        |        |      |      |                                                     |      |      |        |        |
+     * `-------------------------------'                                                     `-------------------------------'
+     *                                       ,--------------.           ,--------------.
+     *                                       |      |       |           |      |       |
+     *                               ,-------|   /  |       |           |      +   /   +-------.
+     *                               | Lower |      |       |           |      |       | Raise |
+     *                               `----------------------'           `----------------------'
+     */
+
+    [_LOWER] = LAYOUT(
+        VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
+         KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
+        VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
+         VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+
+    ),
+
+
+    /* Keymap: RAISE
+     *
+     * ,----------------------------------------------------.           ,----------------------------------------------------.
+     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
+     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
+     * |        |        |      |      |      |      |      |           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
+     * |        |        |      |      |      |      |                         |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
+     * |        |        |      |      |                                                     |      |      |        |        |
+     * `-------------------------------'                                                     `-------------------------------'
+     *                                       ,--------------.           ,--------------.
+     *                                       |      |       |           |      |       |
+     *                               ,-------|   /  |       |           |      +   /   +-------.
+     *                               | Lower |      |       |           |      |       | Raise |
+     *                               `----------------------'           `----------------------'
+     */
+     [_RAISE] = LAYOUT(
+        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,          _______,                      _______,          _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______,                   _______, _______, _______,    _______, _______, _______,                   _______, _______, _______, _______  \
+    ),
+
+
+    /* Keymap: ADJUST
+     *
+     * ,----------------------------------------------------.           ,----------------------------------------------------.
+     * | RESET  |BLToggle| Step | Inc  | Dec  | Britg|      |           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+--------+--------|
+     * |        |RGBToggl|Hue I |Sat I |Va I  | SPI  |Plain |           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
+     * |        |        |Hue D |Sat D |Va D  | SPD  |Breath|           |      |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
+     * |        |        |      |      |      |      |                         |      |      |      |      |        |        |
+     * |--------+--------+------+------+------+------'                         `------+------+------+------+--------+--------|
+     * |        |        |      |      |                                                     |      |      |        |        |
+     * `-------------------------------'                                                     `-------------------------------'
+     *                                       ,--------------.           ,--------------.
+     *                                       |      |       |           |      |       |
+     *                               ,-------|   /  |       |           |      +   /   +-------.
+     *                               | Lower |      |       |           |      |       | Raise |
+     *                               `----------------------'           `----------------------'
+     */
+     [_ADJUST] = LAYOUT(
+          RESET, BL_TOGG, BL_STEP,  BL_INC,  BL_DEC, BL_BRTG,   KC_NO,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+          KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_M_P,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+          KC_NO,   KC_NO, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, RGB_M_B,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+    )
 };
+
+
+
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+
+    case QWERTY:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_QWERTY);
+        }
+        return false;
+        break;
+
+    case LOWER:
+        if (record->event.pressed) {
+            layer_on(_LOWER);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        } else {
+            layer_off(_LOWER);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        }
+        return false;
+        break;
+
+    case RAISE:
+        if (record->event.pressed) {
+            layer_on(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        } else {
+            layer_off(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        }
+        return false;
+        break;
+
+    case ADJUST:
+        if (record->event.pressed) {
+            layer_on(_ADJUST);
+        } else {
+            layer_off(_ADJUST);
+        }
+        return false;
+        break;
+
+    case REFORMAT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL("ke"));
+        } else {
+        }
+        break;
+
+    case COMM:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL("kc"));
+        } else {
+        }
+        break;
+
+    case UNCOMM:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL("ku"));
+        } else {
+        }
+        break;
+
+  }
+  return true;
+}
+
+
+
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+/*****************************************************************************************************/
+
+#ifdef OLED_DRIVER_ENABLE
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+	return OLED_ROTATION_180;
+}
+
+// https://joric.github.io/qle/
+// https://docs.splitkb.com/hc/en-us/articles/360013811280
+
+const char *read_layer_state(void);
+const char *read_logo(void);
+const char *read_mode_icon(bool swap);
+const char *read_host_led_state(void);
+const char *read_rgb_info(void);
+
+static void render_kyria_logo(void) {
+    static const char PROGMEM kyria_logo[] = {
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,192,224,240,124, 62, 31, 15,  7,  3,  1,128,192,224,240,120, 56, 60, 28, 30, 14, 14,  7,  7,135,231,127, 31,255,255, 31,127,231,135,  7,  7, 14, 14, 30, 28, 60, 56,120,240,224,192,128,  1,  3,  7, 15, 31, 62,124,240,224,192,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,240,252,255, 31,  7,  1,  0,  0,192,240,252,254,255,247,243,177,176, 48, 48, 48, 48, 48, 48, 48,120,254,135,  1,  0,  0,255,255,  0,  0,  1,135,254,120, 48, 48, 48, 48, 48, 48, 48,176,177,243,247,255,254,252,240,192,  0,  0,  1,  7, 31,255,252,240,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,255,255,255,  0,  0,  0,  0,  0,254,255,255,  1,  1,  7, 30,120,225,129,131,131,134,134,140,140,152,152,177,183,254,248,224,255,255,224,248,254,183,177,152,152,140,140,134,134,131,131,129,225,120, 30,  7,  1,  1,255,255,254,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0,255,255,  0,  0,192,192, 48, 48,  0,  0,240,240,  0,  0,  0,  0,  0,  0,240,240,  0,  0,240,240,192,192, 48, 48, 48, 48,192,192,  0,  0, 48, 48,243,243,  0,  0,  0,  0,  0,  0, 48, 48, 48, 48, 48, 48,192,192,  0,  0,  0,  0,  0,
+        0,  0,  0,255,255,255,  0,  0,  0,  0,  0,127,255,255,128,128,224,120, 30,135,129,193,193, 97, 97, 49, 49, 25, 25,141,237,127, 31,  7,255,255,  7, 31,127,237,141, 25, 25, 49, 49, 97, 97,193,193,129,135, 30,120,224,128,128,255,255,127,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0, 63, 63,  3,  3, 12, 12, 48, 48,  0,  0,  0,  0, 51, 51, 51, 51, 51, 51, 15, 15,  0,  0, 63, 63,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 48, 48, 63, 63, 48, 48,  0,  0, 12, 12, 51, 51, 51, 51, 51, 51, 63, 63,  0,  0,  0,  0,  0,
+        0,  0,  0,  0, 15, 63,255,248,224,128,  0,  0,  3, 15, 63,127,255,239,207,141, 13, 12, 12, 12, 12, 12, 12, 12, 30,127,225,128,  0,  0,255,255,  0,  0,128,225,127, 30, 12, 12, 12, 12, 12, 12, 12, 13,141,207,239,255,127, 63, 15,  3,  0,  0,128,224,248,255, 63, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  3,  7, 15, 62,124,248,240,224,192,128,  1,  3,  7, 15, 30, 28, 60, 56,120,112,112,224,224,225,231,254,248,255,255,248,254,231,225,224,224,112,112,120, 56, 60, 28, 30, 15,  7,  3,  1,128,192,224,240,248,124, 62, 15,  7,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  3,  7, 15, 14, 30, 28, 60, 56,120,112,112,112,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,112,112,112,120, 56, 60, 28, 30, 14, 15,  7,  3,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+    };
+    oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
+}
+
+static void render_qmk_logo(void) {
+  static const char PROGMEM qmk_logo[] = {
+      0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
+      0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
+      0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
+      0};
+  oled_write_P(qmk_logo, false);
+}
+
+static void render_status(void) {
+    // QMK Logo and version information
+    render_qmk_logo();
+
+    oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("Lower\n"), false);
+            break;
+        case _RAISE:
+            oled_write_P(PSTR("Raise\n"), false);
+            break;
+        case _ADJUST:
+            oled_write_P(PSTR("Adjust\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undefined\n"), false);
+    }
+
+    // Host Keyboard LED Status
+    uint8_t led_usb_state = host_keyboard_leds();
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPLCK ") : PSTR("       "), false);
+    oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
+}
+
+void oled_task_user(void) {
+    if (is_keyboard_master()) {
+        render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    } else {
+        render_kyria_logo();
+    }
+
+
+
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _FN:
+            oled_write_P(PSTR("FN\n"), false);
+            break;
+        case _ADJ:
+            oled_write_P(PSTR("ADJ\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+}
+#endif
