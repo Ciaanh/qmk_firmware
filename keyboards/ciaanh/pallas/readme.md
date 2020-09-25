@@ -1,16 +1,15 @@
-Atreus
-===
+# Pallas
 
-A 62 key variant of the Atreus keyboard.
+A 75 key variant of the Alice keyboard.
 
-https://github.com/profet23/atreus62
+https://github.com/Ciaanh/keyboards/tree/main/Pallas
 
-Keyboard Maintainer: QMK Community  
-Hardware Supported: Atreus62 PCB  
-Hardware Availability: http://shop.profetkeyboards.com/product/atreus62-keyboard
+Keyboard Maintainer: Ciaanh
+Hardware Supported: Pallas PCB  
+Hardware Availability:
 
 Make example for this keyboard (after setting up your build environment):
 
-    make atreus62:default
+    qmk compile -kb ciaanh/pallas -km default
 
 See [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) then the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information.
