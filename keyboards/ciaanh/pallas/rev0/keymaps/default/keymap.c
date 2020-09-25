@@ -72,6 +72,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |        |       |      |      |      |      |     |    |KC_F1 |KC_F2 |KC_F3 |    |     |      |      |      | TO_VS|               |        |
      * `-------------------------------------'      `-----'    `--------------------'    `-----'      `------'      `------'               `--------'
      *
+     *
+     *  // VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
+        //  KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
+        // VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
+        //  VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+        //   KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+
      */
 
     [FN] = LAYOUT_Pallas(
@@ -304,6 +311,10 @@ static void render_status(void) {
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 }
 
+
+
+
+// for reference
 void oled_task_user(void) {
     if (get_highest_layer(layer_state)==TOOLS) {
         render_hokusai();
