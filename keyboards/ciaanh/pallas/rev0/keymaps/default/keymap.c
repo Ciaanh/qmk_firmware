@@ -63,15 +63,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |        |       |      |      |      |      |     |             |      |      |      |               |     |      |      |      |      |               |        |
      * `-------------------------------------'      `-----'             ----------------------               `-----'      `------'      `------'               `--------'
      *
+     *
+     *  // VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
+        //  KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
+        // VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
+        //  VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+        //   KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+
      */
 
     [_LOWER] = LAYOUT_Pallas(
-        VS_FREF, VS_PEEK,   KC_NO,   KC_NO,   KC_F5,   KC_NO,   KC_NO,                                          KC_NO,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_NO,   KC_NO, \
-         KC_F12,   KC_F9,  KC_F10,  KC_F11,   KC_F8,   KC_NO,    COMM,                                          KC_NO,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_NO,   KC_NO, \
-        VS_GREF,   VS_QW,   _SAVE,REFORMAT, VSC_FRM, VSC_TRM,  UNCOMM,                                          KC_NO,   KC_F9,  KC_F10,  KC_F11,  KC_F12,   KC_NO,   KC_NO, \
-         VS_INT,   KC_NO,    _CUT,   _COPY,  _PASTE, VSC_COM,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
-
+        _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______,          \
+        _______, _______, _______, _______, _______,          _______,       _______, _______, _______,      _______,          _______,          _______,                   _______  \
     ),
 
 
@@ -108,6 +114,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+--------+------+------+------+------|------|           |------|------+------+------+------+--------+--------|
      * |        |        |Hue D |Sat D |Va D  | SPD  |Breath|           |      |      |      |      |      |        |        |
      * |--------+--------+------+------+------+------|------'           `------|------+------+------+------+--------+--------|
+     *
+     *  //   RESET, BL_TOGG, BL_STEP,  BL_INC,  BL_DEC, BL_BRTG,   KC_NO,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+     *  //   KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_M_P,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+     *  //   KC_NO,   KC_NO, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, RGB_M_B,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+     *  //   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
+     *  //   KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
      */
 
 
@@ -127,11 +139,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
      [_ADJUST] = LAYOUT_Pallas(
-          RESET, BL_TOGG, BL_STEP,  BL_INC,  BL_DEC, BL_BRTG,   KC_NO,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_M_P,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, RGB_M_B,                                          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,            KC_NO,                        KC_NO,            KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, \
-          KC_NO,   KC_NO,   KC_NO,   KC_NO,                   _______,   KC_NO,   KC_NO,      KC_NO,   KC_NO, _______,                     KC_NO,   KC_NO,   KC_NO,   KC_NO  \
+        _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
+        _______, _______, _______, _______, _______, _______,                _______, _______, _______,               _______, _______, _______, _______, _______, _______,          \
+        _______, _______, _______, _______, _______,          _______,       _______, _______, _______,      _______,          _______,          _______,                   _______  \
     )
 };
 
@@ -154,36 +166,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
         break;
 
-    case LOWER:
-        if (record->event.pressed) {
-            layer_on(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        return false;
-        break;
+    // case LOWER:
+    //     if (record->event.pressed) {
+    //         layer_on(_LOWER);
+    //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //     } else {
+    //         layer_off(_LOWER);
+    //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //     }
+    //     return false;
+    //     break;
 
-    case RAISE:
-        if (record->event.pressed) {
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        } else {
-            layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        }
-        return false;
-        break;
+    // case RAISE:
+    //     if (record->event.pressed) {
+    //         layer_on(_RAISE);
+    //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //     } else {
+    //         layer_off(_RAISE);
+    //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //     }
+    //     return false;
+    //     break;
 
-    case ADJUST:
-        if (record->event.pressed) {
-            layer_on(_ADJUST);
-        } else {
-            layer_off(_ADJUST);
-        }
-        return false;
-        break;
+    // case ADJUST:
+    //     if (record->event.pressed) {
+    //         layer_on(_ADJUST);
+    //     } else {
+    //         layer_off(_ADJUST);
+    //     }
+    //     return false;
+    //     break;
 
     case REFORMAT:
         if (record->event.pressed) {
@@ -269,15 +281,15 @@ static void render_status(void) {
         case _QWERTY:
             oled_write_P(PSTR("Default\n"), false);
             break;
-        case _LOWER:
-            oled_write_P(PSTR("Lower\n"), false);
-            break;
-        case _RAISE:
-            oled_write_P(PSTR("Raise\n"), false);
-            break;
-        case _ADJUST:
-            oled_write_P(PSTR("Adjust\n"), false);
-            break;
+        // case _LOWER:
+        //     oled_write_P(PSTR("Lower\n"), false);
+        //     break;
+        // case _RAISE:
+        //     oled_write_P(PSTR("Raise\n"), false);
+        //     break;
+        // case _ADJUST:
+        //     oled_write_P(PSTR("Adjust\n"), false);
+        //     break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
     }
@@ -289,6 +301,10 @@ static void render_status(void) {
     oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
 }
 
+
+
+
+// for reference
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
@@ -305,12 +321,12 @@ void oled_task_user(void) {
         case _QWERTY:
             oled_write_P(PSTR("Default\n"), false);
             break;
-        case _FN:
-            oled_write_P(PSTR("FN\n"), false);
-            break;
-        case _ADJ:
-            oled_write_P(PSTR("ADJ\n"), false);
-            break;
+        // case _FN:
+        //     oled_write_P(PSTR("FN\n"), false);
+        //     break;
+        // case _ADJ:
+        //     oled_write_P(PSTR("ADJ\n"), false);
+        //     break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
             oled_write_ln_P(PSTR("Undefined"), false);
