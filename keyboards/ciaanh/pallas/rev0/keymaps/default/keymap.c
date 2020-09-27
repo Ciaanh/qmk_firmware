@@ -1,14 +1,16 @@
 #include QMK_KEYBOARD_H
 
-enum layers { _BASE, _FN, _VS, _CODE, _TOOLS };
+enum layers { BASE, FN, VS, CODE, TOOLS };
 
 enum custom_keycodes { CUSTOM_KEY = SAFE_RANGE, VS_FRM, _COMM, _UNCOMM };
 
+//TD Declarations
+enum {
+    PSCR = 0,
+    COMM
+};
 
 #define _SAVE   LCTL(KC_S)
-// #define _CUT    LCTL(KC_X)
-// #define _COPY   LCTL(KC_C)
-// #define _PASTE  LCTL(KC_V)
 
 #define VSC_FRM LSFT(LALT(KC_F))
 #define VSC_TRM LCTL(KC_GRV)
@@ -21,15 +23,12 @@ enum custom_keycodes { CUSTOM_KEY = SAFE_RANGE, VS_FRM, _COMM, _UNCOMM };
 
 #define SC_SF12 LSFT(KC_F12)
 
-#define TD_PSCR ACTION_TAP_DANCE_DOUBLE(KC_PSCR, LSFT(LGUI(KC_S))) // screenshot tool tap dance
-#define TD_COMM ACTION_TAP_DANCE_DOUBLE(_COMM, _UNCOMM)
+#define TO_BASE     TO(BASE)
+#define TO_FN       TG(FN)
+#define TO_VS       TG(VS)
+#define TO_CODE     TG(CODE)
 
-#define TO_BASE     TO(_BASE)
-#define TO_FN       TG(_FN)
-#define TO_VS       TG(_VS)
-#define TO_CODE     TG(_CODE)
-
-#define L_TOOLS     MO(_TOOLS)
+#define L_TOOLS     MO(TOOLS)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -44,18 +43,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | CapsL  |   A   |  S   |  D   |  F   |  G   |          | Pad_4 | Pad_5 | Pad_6 |           |  H   |  J   |  K   |  L   |  ;   |   '    |        |
      * |--------+-------+------+------+------+------+          +-------+-------+-------+           +------+------+------+------+------+--------+ Enter  |
      * | LShift |   Z   |  X   |  C   |  V   |  B   |          | Pad_1 | Pad_2 | Pad_3 |           |  N   |  M   |  ,   |  .   |  /   | RShift |        |
-     * |--------+-------+------+------+------+------+-----+    +-------+-------+-------+   +-------+------+------+------+------+------+--------+--------|
-     * | LCtrl  |  GUI  | LAlt | RAlt |  Del |      |     |    |KC_NLCK| Pad_0 |KC_PDOT|   |L_TOOLS|      | Space|      | TO_FN|               | RCtrl  |
-     * `-------------------------------------'      `-----'    `-----------------------'   `-------'      `------'      `------'               `--------'
+     * |--------+-------+------+------+------+------+-----+    +-------+-------+-------+    +------+------+------+------+------+------+--------+--------|
+     * | LCtrl  |  GUI  |      |_TOOLS|  Del |      | LAlt|    |KC_NLCK| Pad_0 |KC_PDOT|    | RAlt |      | Space|      | TO_FN|               | RCtrl  |
+     * `-------------------------------------'      `-----'    `-----------------------'    `------'      `------'      `------'               `--------'
      *
      */
 
-    [_BASE] = LAYOUT_Pallas( \
+    [BASE] = LAYOUT_Pallas( \
         KC_GRV , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,                                        KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,  KC_EQL, KC_BSLS,   KC_ESC, \
         KC_TAB , KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                  KC_P7, KC_P8,  KC_P9,                   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC,  KC_RBRC, \
         KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                  KC_P4, KC_P5,  KC_P6,                   KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,   KC_ENT, \
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                  KC_P1, KC_P2,  KC_P3,                   KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,           \
-        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT, KC_BSPC,         KC_NO,       KC_NLCK, KC_P0,KC_PDOT,       L_TOOLS,  KC_SPC,            TO_FN,                             KC_RCTL  \
+        KC_LCTL, KC_LGUI, KC_NO,   L_TOOLS, KC_BSPC,        KC_LALT,       KC_NLCK, KC_P0,KC_PDOT,       L_TOOLS, KC_SPC,            TO_FN,                             KC_RCTL  \
     ),
 
 
@@ -75,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
 
-    [_FN] = LAYOUT_Pallas(
+    [FN] = LAYOUT_Pallas(
         _______, _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                 KC_F10, KC_F11, KC_F12,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F7,  KC_F8,  KC_F9,               _______, _______, _______, _______, _______, _______, _______, \
@@ -98,8 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F12 => go to definition
         SC_SF12 => find references
 
-        COMM => comment CTL+K,C
-        UNCOMM => comment CTL+K,U
+        COMM => tap dance comment CTL+K,C / uncomment CTL+K,U
 
         _SAVE => save CTL+S
 
@@ -112,17 +110,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |        |       |      |      |      |      |            | KC_F9| VS_QW|SC_SF12|          |      |      |      |       |      |        |        |
      * |--------+-------+------+------+------+------+            +------+------+-------+          +------+------+------+-------+------+--------+        |
      * |        |       |      |      |      |      |            |VS_INT|      | KC_F12|          |      |      |      |       |      |        |        |
-     * |--------+-------+------+------+------+------+-------+    +------+------+-------+    +-----+------+------+------+-------+------+--------+--------|
-     * |        |       |      |      |      |      |TD_COMM|    |VS_FRM| _SAVE|VS_GREF|    |     |      |      |      |TO_CODE|               |        |
-     * `-------------------------------------'      `-------'    `---------------------'    `-----'      `------'      `-------'               `--------'
+     * |--------+-------+------+------+------+------+-------+    +------+------+-------+   +------+------+------+------+-------+------+--------+--------|
+     * |        |       | COMM |      |      |      |       |    |VS_FRM| _SAVE|VS_GREF|   |      |      |      |      |TO_CODE|               |        |
+     * `-------------------------------------'      `-------'    `---------------------'   `------'      `------'      `-------'               `--------'
      *
      */
-     [_VS] = LAYOUT_Pallas(
+     [VS] = LAYOUT_Pallas(
         _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F5,  KC_F10,  KC_F11,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F9,   VS_QW, SC_SF12,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                 VS_INT, XXXXXXX,  KC_F12,               _______, _______, _______, _______, _______, _______,          \
-        _______, _______, _______, _______, _______,          TD_COMM,        VS_FRM,   _SAVE, VS_GREF,      _______,          _______,          TO_CODE,                   _______  \
+        _______, _______,    COMM, _______, _______,          _______,        VS_FRM,   _SAVE, VS_GREF,      _______,          _______,          TO_CODE,                   _______  \
     ),
 
 
@@ -139,31 +137,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F12 => go to definition
         SC_SF12 => find references
 
-        COMM => comment CTL+K,C
-        UNCOMM => comment CTL+K,U
+        COMM => tap dance comment CTL+K,C / uncomment CTL+K,U
 
         _SAVE => save CTL+S
 
      *
-     * ,----------------------------------------------------                               -------------------------------------------------------------.
-     * |        |       |      |      |      |      |      |                               |      |      |      |      |       |      |        |        |
-     * |--------+-------+------+------+------+------+------+    ,-------+------+-------.   +------+------+------+------+-------+------+--------+--------|
-     * |        |       |      |      |      |      |           |VSC_TRM|      |VSC_COM|          |      |      |      |       |      |        |        |
-     * |--------+-------+------+------+------+------+           +-------+------+-------+          +------+------+------+-------+------+--------+--------|
-     * |        |       |      |      |      |      |           |       |      |SC_SF12|          |      |      |      |       |      |        |        |
-     * |--------+-------+------+------+------+------+           +-------+------+-------+          +------+------+------+-------+------+--------+        |
-     * |        |       |      |      |      |      |           |       |      | KC_F12|          |      |      |      |       |      |        |        |
-     * |--------+-------+------+------+------+------+-------+   +-------+------+-------+    +-----+------+------+------+-------+------+--------+--------|
-     * |        |       |      |      |      |      |TD_COMM|   |VSC_FRM| _SAVE|       |    |     |      |      |      |TO_BASE|               |        |
-     * `-------------------------------------'      `-------'   `----------------------'    `-----'      `------'      `-------'               `--------'
+     * ,-----------------------------------------------------                              --------------------------------------------------------------.
+     * |        |       |      |      |      |      |       |                              |       |      |      |      |       |      |        |        |
+     * |--------+-------+------+------+------+------+-------+   ,-------+------+-------.   +-------+------+------+------+-------+------+--------+--------|
+     * |        |       |      |      |      |      |           |VSC_TRM|      |VSC_COM|           |      |      |      |       |      |        |        |
+     * |--------+-------+------+------+------+------+           +-------+------+-------+           +------+------+------+-------+------+--------+--------|
+     * |        |       |      |      |      |      |           |       |      |SC_SF12|           |      |      |      |       |      |        |        |
+     * |--------+-------+------+------+------+------+           +-------+------+-------+           +------+------+------+-------+------+--------+        |
+     * |        |       |      |      |      |      |           |       |      | KC_F12|           |      |      |      |       |      |        |        |
+     * |--------+-------+------+------+------+------+-------+   +-------+------+-------+    +------+------+------+------+-------+------+--------+--------|
+     * |        |       | COMM |      |      |      |       |   |VSC_FRM| _SAVE|       |    |      |      |      |      |TO_BASE|               |        |
+     * `-------------------------------------'      `-------'   `----------------------'    `------'      `------'      `-------'               `--------'
      *
      */
-     [_CODE] = LAYOUT_Pallas(
+     [CODE] = LAYOUT_Pallas(
         _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                VSC_TRM, XXXXXXX, VSC_COM,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                XXXXXXX, XXXXXXX, SC_SF12,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                XXXXXXX, XXXXXXX,  KC_F12,               _______, _______, _______, _______, _______, _______,          \
-        _______, _______, _______, _______, _______,          TD_COMM,       VSC_FRM,   _SAVE, XXXXXXX,      _______,          _______,          TO_BASE,                   _______  \
+        _______, _______,    COMM, _______, _______,          _______,       VSC_FRM,   _SAVE, XXXXXXX,      _______,          _______,          TO_BASE,                   _______  \
     ),
 
 
@@ -171,25 +168,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Keymap: _TOOLS
     *
-    * ,----------------------------------------------------                             ----------------------------------------------------------------.
-    * |        |       |      |      |      |      |      |                             |      |      |      |      |BLToggle|RGBToggl| RGB_MOD|   RESET|
-    * |--------+-------+------+------+------+------+------+    ,------+------+------.   +------+------+------+------+--------+--------+--------+--------|
-    * |        |       |      |      |      |      |           |      |      |      |          |      |      |      |  Step  |Hue Inc |Hue Dec |        |
-    * |--------+-------+------+------+------+------+           +------+------+------+          +------+------+------+--------+--------+--------+--------|
-    * |        |       |      |      |      |      |           |      |      |      |          |      |      |      |  Inc   |Sat Inc |Sat Dec |        |
-    * |--------+-------+------+------+------+------+           +------+------+------+          +------+------+------+--------+--------+--------+        |
-    * |        |       |      |      |      |      |           |      |      |      |          |      |      |      |  Dec   |Bright +|Bright -|        |
-    * |--------+-------+------+------+------+------+-------+   +------+------+------+    +-----+------+------+------+--------+--------+--------+--------|
-    * |        |       |      |      |      |      |       |   |      |      |      |    |     |      |      |      |  Britg |                 |        |
-    * `-------------------------------------'      `-------'   `--------------------'    `-----'      `------'      `--------'                 `--------'
+    * ,----------------------------------------------------                             -----------------------------------------------------------------.
+    * |        |       |      |      |      |      |      |                             |TD_PSCR|      |      |      |BLToggle|RGBToggl| RGB_MOD|   RESET|
+    * |--------+-------+------+------+------+------+------+    ,------+------+------.   +-------+------+------+------+--------+--------+--------+--------|
+    * |        |       |      |      |      |      |           |      |      |      |           |      |      |      |  Step  |Hue Inc |Hue Dec |        |
+    * |--------+-------+------+------+------+------+           +------+------+------+           +------+------+------+--------+--------+--------+--------|
+    * |        |       |      |      |      |      |           |      |      |      |           |      |      |      |  Inc   |Sat Inc |Sat Dec |        |
+    * |--------+-------+------+------+------+------+           +------+------+------+           +------+------+------+--------+--------+--------+        |
+    * |        |       |      |      |      |      |           |      |      |      |           |      |      |      |  Dec   |Bright +|Bright -|        |
+    * |--------+-------+------+------+------+------+-------+   +------+------+------+    +------+------+------+------+--------+--------+--------+--------|
+    * |        |       |      |_TOOLS|      |      |       |   |      |      |      |    |      |      |      |      |  Britg |                 |        |
+    * `-------------------------------------'      `-------'   `--------------------'    `------'      `------'      `--------'                 `--------'
     *
     */
-    [_TOOLS] = LAYOUT_Pallas(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BL_TOGG, RGB_TOG, RGB_MOD,   RESET, \
+    [TOOLS] = LAYOUT_Pallas(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                      TD(PSCR), XXXXXXX, XXXXXXX, XXXXXXX, BL_TOGG, RGB_TOG, RGB_MOD,   RESET, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, BL_STEP, RGB_HUI, RGB_HUD, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_INC, RGB_SAI, RGB_SAD, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_DEC, RGB_VAI, RGB_SPD,          \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,          XXXXXXX,          BL_BRTG,                   XXXXXXX  \
+        XXXXXXX, XXXXXXX, XXXXXXX, L_TOOLS, XXXXXXX,          XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,          XXXXXXX,          BL_BRTG,                   XXXXXXX  \
     )
 };
 
@@ -201,6 +198,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*****************************************************************************************************/
 /*****************************************************************************************************/
 /*****************************************************************************************************/
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [PSCR] = ACTION_TAP_DANCE_DOUBLE(KC_PSCR, LSFT(LGUI(KC_S))), // screenshot tool tap dance
+  [COMM] = ACTION_TAP_DANCE_DOUBLE(_COMM, _UNCOMM)
+};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -276,19 +278,19 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) { //_FN, _VS, _CODE, _TOOLS
-        case _BASE:
+        case BASE:
             oled_write_P(PSTR("Default\n"), false);
             break;
-        case _FN:
+        case FN:
             oled_write_P(PSTR("[F]\n"), false);
             break;
-        case _VS:
+        case VS:
             oled_write_P(PSTR("Visual Studio\n"), false);
             break;
-        case _CODE:
+        case CODE:
             oled_write_P(PSTR("VS Code\n"), false);
             break;
-        case _TOOLS:
+        case TOOLS:
             oled_write_P(PSTR("Config\n"), false);
             break;
         default:
@@ -303,7 +305,7 @@ static void render_status(void) {
 }
 
 void oled_task_user(void) {
-    if (get_highest_layer(layer_state)==_TOOLS) {
+    if (get_highest_layer(layer_state)==TOOLS) {
         render_hokusai();
     } else {
         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
