@@ -20,3 +20,8 @@ Driver issues https://docs.qmk.fm/#/faq_build?id=unknown-device-for-dfu-bootload
 Oled logo
     https://joric.github.io/qle/
     https://docs.splitkb.com/hc/en-us/articles/360013811280
+
+
+
+
+qmk compile -kb ciaanh/pallas -km default
