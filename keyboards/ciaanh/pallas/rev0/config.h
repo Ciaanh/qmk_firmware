@@ -24,11 +24,11 @@
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
-/* define tapping term */
-#define TAPPING_TERM 120
-
 #ifdef OLED_DRIVER_ENABLE
-  #define OLED_DISPLAY_128X64
+    #define OLED_DISPLAY_128X64
+    #define OLED_FONT_H "lib/oledfont.c"
+    // #define OLED_FONT_END 223
+    #define OLED_FONT_END 255
 #endif
 
 #ifdef BACKLIGHT_ENABLE
@@ -46,8 +46,6 @@
     #define RGBLIGHT_HUE_STEP 8
     #define RGBLIGHT_SAT_STEP 8
     #define RGBLIGHT_VAL_STEP 8
-
-    #define OLED_FONT_H "lib/oledfont.c"
 #endif
 
 /* Set 0 if debouncing isn't needed */
