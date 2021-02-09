@@ -182,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, BL_STEP, RGB_HUI, RGB_HUD, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_INC, RGB_SAI, RGB_SAD, XXXXXXX, \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_DEC, RGB_VAI, RGB_SPD,          \
-        XXXXXXX, XXXXXXX, XXXXXXX, L_TOOLS, XXXXXXX,          XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,          XXXXXXX,          BL_BRTG,                   XXXXXXX  \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,          XXXXXXX,          BL_BRTG,                   L_TOOLS  \
     ),
 
 
@@ -322,19 +322,11 @@ static void render_status(void) {
     oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 
-    oled_write_ln("3", false);
-    oled_write_ln("4", false);
-    oled_write_ln("5", false);
-    oled_write_ln("6", false);
-    oled_write_ln("7", false);
-
-    // static const char PROGMEM test_logo[] = {
-    //     0xFF,0xFE,
-
-
-    //     0x00
-    // };
-    // oled_write_P(test_logo, false);
+    oled_write_ln("", false);
+    oled_write_ln("", false);
+    oled_write_ln("", false);
+    oled_write_ln("", false);
+    oled_write_ln("", false);
 }
 
 static void render_pallas_logo(void) {
@@ -356,7 +348,7 @@ void oled_task_user(void) {
             render_pallas_logo();
             break;
         default:
-            render_status();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+            render_status();
     }
 }
 #endif

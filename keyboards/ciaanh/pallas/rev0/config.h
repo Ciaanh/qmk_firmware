@@ -27,7 +27,6 @@
 #ifdef OLED_DRIVER_ENABLE
     #define OLED_DISPLAY_128X64
     #define OLED_FONT_H "lib/oledfont.c"
-    // #define OLED_FONT_END 223
     #define OLED_FONT_END 255
 #endif
 
