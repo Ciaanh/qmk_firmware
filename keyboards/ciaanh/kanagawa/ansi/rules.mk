@@ -1,1 +1,1 @@
-RGB_MATRIX_CUSTOM_USER = no
+# This file intentionally left blank
