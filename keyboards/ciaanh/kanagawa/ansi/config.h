@@ -15,9 +15,4 @@
  */
 #pragma once
 
-#ifdef OLED_ENABLE
-/* I2C Conf */
-#    define I2C_DRIVER I2CD0
-#    define I2C1_SDA_PIN GP0
-#    define I2C1_SCL_PIN GP1
-#endif
+#define RGB_MATRIX_LED_COUNT 82
