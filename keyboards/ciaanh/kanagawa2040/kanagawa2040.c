@@ -1,48 +1,61 @@
-#include "kanagawa2040.h"
+/* Copyright 2021 Sleepdealer
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include QMK_KEYBOARD_H
 
-#ifdef RGB_MATRIX_ENABLE
 
-#define NA NO_LED
+#ifdef OLED_ENABLE
+bool oled_task_kb(void) {
+    if (!oled_task_user()) {
+        return false;
+    }
+    
+    // 21 characters per line
+    // 16 cols / 4 rows
 
-/* RGB Positioning */
-led_config_t g_led_config = {    
-    {
-        // Key Matrix to LED Index
-        { 12, 11, 10,  9,  8,  7,  6,  5,  4,  3,  2,  1,  0, NO_LED }, 
-        { 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13 }, 
-        { 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27 }, 
-        { 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 66 }, 
-        { 65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 70, 67 }, 
-        { 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 69, 68 }  
-    }, 
+    oled_write_P(PSTR("    Kanagawa rev 2.0   "), false);
 
-    {
-        // LED Index to Physical Position
-              {182, 0}, {168, 0}, {154, 0}, {140, 0}, {123, 0}, {109, 0}, { 95, 0}, { 81, 0}, { 63, 0}, { 49, 0}, { 35, 0}, { 21, 0}, {  0, 0},	
-    {189,12}, {168,12}, {154,12}, {140,12}, {126,12}, {112,12}, { 98,12}, { 84,12}, { 70,12}, { 56,12}, { 42,12}, { 28,12}, { 14,12}, {  0,12},	
-    {193,23}, {175,23}, {161,23}, {147,23}, {133,23}, {119,23}, {105,23}, { 91,23}, { 77,23}, { 63,23}, { 49,23}, { 35,23}, { 21,23}, {  4,23},	
-		      {186,35}, {165,35}, {151,35}, {137,35}, {123,35}, {109,35}, { 95,35}, { 81,35}, { 67,35}, { 53,35}, { 39,35}, { 25,35}, {  5,35},	
-				        {177,47}, {158,47}, {144,47}, {130,47}, {116,47}, {102,47}, { 88,47}, { 74,47}, { 60,47}, { 46,47}, { 32,47}, {  9,47},	
-    {224,12},																											
-    {224,23},																											
-    {224,35},																											
-		      {217,64}, {203,52},																							
-				        {203,64}, {189,64}, {168,58}, {154,58}, {140,58}, {123,60}, {102,64}, { 74,64}, { 53,60}, { 32,58}, { 16,58}, {  2,58}	
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case 0:
+            oled_write_P(PSTR("_\n"), false);
+            break;
+        case 1:
+            oled_write_P(PSTR("[Lower]\n"), false);
+            break;
+        case 2:
+            oled_write_P(PSTR("[Raise]\n"), false);
+            break;
+        case 3:
+            oled_write_P(PSTR("[Adjust]\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undefined\n"), false);
+    }
 
-    }, 
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    oled_write_ln(led_state.caps_lock ? "CAPLOCK" : "       ", false);
+    // oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    // oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    // oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
 
-    {
-        // LED Index to Flag
-           4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-           4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-              4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4,
-        4,
-        4, 4, 4,
-              4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-    }};
+    oled_advance_page(true);
+
+
+    return true;
+}
 #endif
-
-

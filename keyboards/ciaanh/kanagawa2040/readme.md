@@ -1,37 +1,25 @@
-https://learn.adafruit.com/using-qmk-on-rp2040-microcontrollers/adafruit-macropad-with-qmk
-
-qmk compile -kb ciaanh/kanagawa2040 -km default
-
-# Ciaanh Kanagawa2040
-
-
-```sh
-qmk compile -kb ciaanh/kanagawa2040 -km default
-```
-
 # Kanagawa
 
-A 75% keyboard with oled and rotary encoder for Elite-C
 
-    Keyboard Maintainer : Ciaanh
+![Kanagawa](https://i.imgur.com/KKOZbUCh.jpeg)
 
-    Hardware Supported : Kanagawa PCB  
+*A 75% keyboard with oled, rotary encoder and split spacebar for Raspberry Pico*
 
-    Hardware Availability : https://github.com/Ciaanh/keyboards/tree/main/Kanagawa
-
+* Keyboard Maintainer: [Nicolas Fabre](https://github.com/Ciaanh)
+* Hardware Supported: *Kanagawa PCB rev 2, Raspberry Pico*
+* Hardware Availability: *open source files for the PCB and case available [here](https://github.com/Ciaanh/keyboards/tree/main/Kanagawa)*
 
 Make example for this keyboard (after setting up your build environment):
 
-    qmk compile -kb ciaanh/kanagawa -km default
+    make ciaanh/kanagawa2040:default
 
-Driver issues https://docs.qmk.fm/#/faq_build?id=unknown-device-for-dfu-bootloader
 
+See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
 ## Bootloader
 
-Enter the bootloader in 4 ways:
+Enter the bootloader in 3 ways:
 
-* **Bootmagic reset**: Hold down the key just bellow the rotary encoder push-button on power-up.
-* **Physical reset button**: Press twice the button on the side while the board is connected.
-* **BOOT button** Hold down the rotary encoder push-button on power-up or reset.
-* **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available.
+* **Bootmagic reset**: Hold down the key at (0,13) in the matrix (the rotary encoder push-button) and plug in the keyboard
+* **Physical reset button**: Briefly press both the reset and the Bootsel on the back of the PCB
+* **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available
