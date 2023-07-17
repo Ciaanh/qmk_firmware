@@ -31,16 +31,16 @@ bool oled_task_kb(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case 0:
-            oled_write_P(PSTR("_\n"), false);
+            oled_write_P(PSTR("_Base_\n"), false);
             break;
         case 1:
             oled_write_P(PSTR("[Lower]\n"), false);
             break;
         case 2:
-            oled_write_P(PSTR("[Raise]\n"), false);
+            oled_write_P(PSTR("[Upper]\n"), false);
             break;
         case 3:
-            oled_write_P(PSTR("[Adjust]\n"), false);
+            oled_write_P(PSTR("[Function]\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);

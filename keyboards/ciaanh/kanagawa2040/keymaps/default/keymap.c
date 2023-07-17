@@ -20,7 +20,7 @@ enum layers
     _BASE,
     _LOWER, 
     _UPPER,
-    _CODE
+    _FUNCTION
 };
 
 enum custom_keycodes 
@@ -30,7 +30,7 @@ enum custom_keycodes
 };
 
 #define TO_BASE     TO(_BASE)
-#define TO_CODE     TG(_CODE)
+#define TO_FN     TG(_FUNCTION)
 
 #define L_UP       MO(_UPPER)
 #define L_DWN      MO(_LOWER)
@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_TAB,    KC_Q,       KC_W,       KC_E,       KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC, KC_RBRC, KC_BSLS,  KC_HOME,
          KC_CAPS,    KC_A, LT(0,KC_S),       KC_D,       KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,  KC_ENT,            KC_END,
          KC_LSFT,    KC_Z, LT(0,KC_X), LT(0,KC_C), LT(0,KC_V),    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,             KC_UP,         
-         KC_LCTL, KC_LGUI,    KC_LALT,            L_DWN,  KC_SPC,        KC_SPC,    L_UP,       KC_RALT, TO_CODE, KC_RCTL,     KC_LEFT, KC_DOWN, KC_RGHT 
+         KC_LCTL, KC_LGUI,    KC_LALT,            L_DWN,  KC_SPC,        KC_SPC,    L_UP,       KC_RALT, TO_FN, KC_RCTL,     KC_LEFT, KC_DOWN, KC_RGHT 
     ),
 
     [_LOWER] = LAYOUT(
@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          XXXXXXX, XXXXXXX, XXXXXXX,       _______, XXXXXXX,       XXXXXXX, _______,       XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX 
     ),
 
-    [_CODE] = LAYOUT(
+    [_FUNCTION] = LAYOUT(
          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,             RGB_TOG,
 
          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,
@@ -161,6 +161,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_BASE] =   { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [_LOWER] =  { ENCODER_CCW_CW(KC_PGDN, KC_PGUP) },
     [_UPPER] =  { ENCODER_CCW_CW(KC_WH_L, KC_WH_R) },
-    [_CODE] =   { ENCODER_CCW_CW(RGB_MOD, RGB_RMOD) },
+    [_FUNCTION] =   { ENCODER_CCW_CW(RGB_MOD, RGB_RMOD) },
 };
 #endif
