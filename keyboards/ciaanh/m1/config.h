@@ -1,4 +1,4 @@
-/* Copyright 2023 Ciaanh (@ciaanh)
+/* Copyright (C) 2023 jonylee@hfd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,8 +13,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
 
-#ifdef RGB_MATRIX_ENABLE
-#    define RGB_MATRIX_LED_COUNT 83
-#endif 
+#define ENCODER_DEFAULT_POS 0x3
+
+/* SPI Config for spi flash*/
+#define SPI_DRIVER SPIDQ
+#define SPI_SCK_PIN B3
+#define SPI_MOSI_PIN B5
+#define SPI_MISO_PIN B4
+#define SPI_MOSI_PAL_MODE 5
+
+#define EXTERNAL_FLASH_SPI_SLAVE_SELECT_PIN C12
+
+/* I2C Config for LED Driver */
+#define SNLED27351_I2C_ADDRESS_1 SNLED27351_I2C_ADDRESS_GND
+#define SNLED27351_I2C_ADDRESS_2 SNLED27351_I2C_ADDRESS_VDDIO
+
+#define I2C1_OPMODE OPMODE_I2C
+#define I2C1_CLOCK_SPEED 400000 /* 400000 */
+
+#define RGB_TRIGGER_ON_KEYDOWN

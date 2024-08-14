@@ -1,4 +1,4 @@
-/* Copyright 2023 Ciaanh (@ciaanh)
+/* Copyright (C) 2023 jonylee@hfd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,10 @@
  */
 #pragma once
 
-#define I2C_DRIVER I2CD0
-#define I2C1_SDA_PIN GP0
-#define I2C1_SCL_PIN GP1
+#include_next <mcuconf.h>
+
+#undef WB32_SPI_USE_QSPI
+#define WB32_SPI_USE_QSPI TRUE
+
+#undef WB32_I2C_USE_I2C1
+#define WB32_I2C_USE_I2C1 TRUE
