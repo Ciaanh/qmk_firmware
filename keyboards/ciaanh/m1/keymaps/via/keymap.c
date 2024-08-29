@@ -34,12 +34,35 @@ enum __layers {
 #define TO_WoW TG(_WOW)
 
 
+bool is_caps_lock_on(void) {
+    led_t led_state = host_keyboard_led_state();
+    return led_state.caps_lock;
+}
+
 enum {
     TD_CAPS,
 };
 
+void dance_caps(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        if(is_caps_lock_on())
+        {
+            register_code(KC_CAPS);
+        }
+        caps_word_on();
+        reset_tap_dance(state);
+    }
+    if (state->count >= 2) {
+        if(is_caps_word_on()){
+            caps_word_off();
+        }
+        register_code(KC_CAPS);
+        reset_tap_dance(state);
+    }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
+    [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_caps),
 };
 
 
