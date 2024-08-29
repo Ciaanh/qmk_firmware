@@ -2,6 +2,61 @@
     "name": "Kanagawa",
     "productId": "0x0010",
     "vendorId": "0xC1E0",
+    "menus": [
+      {
+        "label": "Lighting",
+        "content": [
+          {
+            "label": "Backlight",
+            "content": [
+              {
+                "label": "Brightness",
+                "type": "range",
+                "options": [0, 200],
+                "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
+              },
+              {
+                "label": "Effect",
+                "type": "dropdown",
+                "content": ["id_qmk_rgb_matrix_effect", 3, 2],
+                "options": [
+                  ["All Off", 0],
+                  ["SOLID_COLOR", 1],
+                  ["SOLID_REACTIVE_SIMPLE", 2],
+                  ["SOLID_REACTIVE", 3],                 
+                  ["SOLID_REACTIVE_NEXUS", 4],
+                  ["SOLID_REACTIVE_MULTINEXUS", 5],                  
+                  ["SOLID_REACTIVE_CROSS", 6],
+                  ["SOLID_REACTIVE_MULTICROSS", 7],
+                  ["SOLID_SPLASH", 8],
+                  ["SOLID_MULTISPLASH", 9],
+                  ["DUAL_BEACON", 10],
+                  ["RAINBOW_BEACON", 11],
+                  ["RAINBOW_MOVING_CHEVRON", 12],
+                  ["RAINDROPS", 13],
+                  ["STARLIGHT", 14],
+                  ["MATRIX_MULTISPLASH", 16],
+                  ["BREATHING", 17],
+                  ["DIGITAL_RAIN", 18]
+                ]
+              },
+              {
+                "showIf": "{id_qmk_rgb_matrix_effect} != 0",
+                "label": "Effect Speed",
+                "type": "range",
+                "options": [0, 255],
+                "content": ["id_qmk_rgb_matrix_effect_speed", 3, 3]
+              },
+              {
+                "showIf": "{id_qmk_rgb_matrix_effect} != 0",
+                "label": "Color",
+                "type": "color",
+                "content": ["id_qmk_rgb_matrix_color", 3, 4]
+              }
+            ]
+          }
+        ]
+      }],
     "matrix": { "rows": 6, "cols": 14 },
     "layouts": {
         "keymap": [
