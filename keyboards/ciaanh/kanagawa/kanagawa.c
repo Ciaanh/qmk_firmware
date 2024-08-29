@@ -1,4 +1,4 @@
-/* Copyright 2021 Sleepdealer
+/* Copyright 2023 Ciaanh (@ciaanh)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +15,22 @@
  */
 #include QMK_KEYBOARD_H
 
+#ifdef RGBLIGHT_ENABLE
+// Following line allows macro to read current RGB settings
+extern rgblight_config_t rgblight_config;
+#endif
 
 #ifdef OLED_ENABLE
+
 bool oled_task_kb(void) {
     if (!oled_task_user()) {
         return false;
     }
-    
+
     // 21 characters per line
     // 16 cols / 4 rows
 
-    oled_write_P(PSTR("    Kanagawa rev 2.1   "), false);
+    oled_write_P(PSTR("    Kanagawa rev 2.1v  "), false);
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
@@ -50,9 +55,15 @@ bool oled_task_kb(void) {
     led_t led_state = host_keyboard_led_state();
     oled_write_ln_P(led_state.caps_lock ? PSTR("CAPLOCK") : PSTR("       "), false);
 
-    oled_advance_page(true);
+#    if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
+    static char temp[20] = {0};
+    snprintf(temp, sizeof(temp) + 1, "M:%3dH:%3dS:%3dV:%3d", rgb_matrix_config.mode, rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, rgb_matrix_config.hsv.v);
+    oled_write_P(temp, false);
+#    endif
 
+    oled_advance_page(true);
 
     return true;
 }
+
 #endif
