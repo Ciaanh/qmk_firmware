@@ -28,22 +28,42 @@ enum __layers {
 #define KC_LC LT(0,KC_C)
 #define KC_LV LT(0,KC_V)
 
-#define TO_FN MO(_FUNCTIONS)
+#define MO_FN MO(_FUNCTIONS)
 #define TO_BL TO(_BASE)
-#define TO_CL TG(_CUSTOM)
-#define TO_WoW TG(_WOW)
+#define TG_CL TG(_CUSTOM)
+#define TG_WoW TG(_WOW)
 
+
+bool is_caps_lock_on(void) {
+    led_t led_state = host_keyboard_led_state();
+    return led_state.caps_lock;
+}
 
 enum {
     TD_CAPS,
 };
 
+void dance_caps(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        if(is_caps_lock_on())
+        {
+            register_code(KC_CAPS);
+        }
+        caps_word_on();
+        reset_tap_dance(state);
+    }
+    if (state->count >= 2) {
+        if(is_caps_word_on()){
+            caps_word_off();
+        }
+        register_code(KC_CAPS);
+        reset_tap_dance(state);
+    }
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
+    [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_caps),
 };
-
-
-
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -54,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,KC_RBRC,  KC_BSLS,          KC_PGUP,
     TD(TD_CAPS), KC_A,   KC_LS,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,     KC_ENT,                KC_PGDN,
         KC_LSFT, KC_Z,   KC_LX,   KC_LC,   KC_LV,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,           KC_UP,   KC_END,
-        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, TO_FN,   KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO_FN,   KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT),
 
     
     [_CUSTOM] = LAYOUT_ansi( /* WASD/↑←↓→ */
@@ -76,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     
     [_FUNCTIONS] = LAYOUT_ansi(
-        _______,   TO_BL,   TO_CL,  TO_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RGB_TOG,
+        _______,   TO_BL,   TG_CL,  TG_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RGB_TOG,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______,
         _______, _______, _______, _______, _______, _______, _______, _______, KC_INS,  _______, KC_PSCR, _______, _______, RGB_MOD,           RGB_VAI,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOG, _______, _______,      RGB_SPI,               RGB_VAD,
