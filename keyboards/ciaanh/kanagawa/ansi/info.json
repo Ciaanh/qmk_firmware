@@ -46,7 +46,8 @@
             "starlight": true,
             "matrix_multisplash": true,
             "breathing": true,
-            "digital_rain": true
+            "digital_rain": true,
+            "multisplash": true
         },
         "center_point": [90, 28],
         "driver": "ws2812",

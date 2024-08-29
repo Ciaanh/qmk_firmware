@@ -37,7 +37,8 @@
                   ["STARLIGHT", 14],
                   ["MATRIX_MULTISPLASH", 16],
                   ["BREATHING", 17],
-                  ["DIGITAL_RAIN", 18]
+                  ["DIGITAL_RAIN", 18],
+                  ["MATRIX_MULTISPLASH", 19]
                 ]
               },
               {
