@@ -28,10 +28,10 @@ enum __layers {
 #define KC_LC LT(0,KC_C)
 #define KC_LV LT(0,KC_V)
 
-#define TO_FN MO(_FUNCTIONS)
+#define MO_FN MO(_FUNCTIONS)
 #define TO_BL TO(_BASE)
-#define TO_CL TG(_CUSTOM)
-#define TO_WoW TG(_WOW)
+#define TG_CL TG(_CUSTOM)
+#define TG_WoW TG(_WOW)
 
 
 bool is_caps_lock_on(void) {
@@ -65,9 +65,6 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_caps),
 };
 
-
-
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -77,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,KC_RBRC,  KC_BSLS,          KC_PGUP,
     TD(TD_CAPS), KC_A,   KC_LS,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,     KC_ENT,                KC_PGDN,
         KC_LSFT, KC_Z,   KC_LX,   KC_LC,   KC_LV,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,           KC_UP,   KC_END,
-        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, TO_FN,   KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO_FN,   KC_RCTL,          KC_LEFT, KC_DOWN, KC_RGHT),
 
     
     [_CUSTOM] = LAYOUT_ansi( /* WASD/↑←↓→ */
@@ -94,16 +91,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX,C(KC_F1),C(KC_F2),C(KC_F3),C(KC_F4),C(KC_F5), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
         _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
         XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,               XXXXXXX,
-        _______,C(KC_F6),C(KC_F7),C(KC_F8),C(KC_F9), XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,          _______, XXXXXXX,
+        _______,C(KC_F6),C(KC_F7),C(KC_F8),C(KC_F9),C(KC_F10),XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,          _______, XXXXXXX,
         _______, _______, _______,                   _______,                            XXXXXXX, _______, XXXXXXX,          _______, _______, _______),
 
     
     [_FUNCTIONS] = LAYOUT_ansi(
-        _______,   TO_BL,   TO_CL,  TO_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RGB_TOG,
+        _______,   TO_BL,   TG_CL,  TG_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RGB_TOG,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, KC_INS,  _______, KC_PSCR, _______, _______, RGB_MOD,           RGB_VAI,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOG, _______, _______,      RGB_SPI,               RGB_VAD,
-        _______, _______, _______, KC_CALC, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______,          RGB_SPD,           RGB_HUI, _______,
+        _______, _______, _______, _______, _______,  QK_RBT, _______, _______, KC_INS,  _______, KC_PSCR, _______, _______, RGB_MOD,           RGB_VAI,
+        _______, _______, _______, _______, _______,  EE_CLR, _______, _______, _______, RGB_TOG, _______, _______,      RGB_SPI,               RGB_VAD,
+        _______, _______, _______, KC_CALC, _______, QK_BOOT, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______,          RGB_SPD,           RGB_HUI, _______,
         _______, GU_TOGG, _______,                   _______,                            _______, _______, _______,          RGB_SAD,  RGB_HUD, RGB_SAI)
 };
 
