@@ -49,9 +49,11 @@
     },
     "rgb_matrix": {
         "driver": "snled27351",
+        "center_point": [91, 28],
         "max_brightness": 200,
         "val_steps": 20,
         "animations": {
+            "solid_color":true,
             "breathing": true,
             "cycle_all": true,
             "cycle_left_right": true,
@@ -63,12 +65,11 @@
             "cycle_spiral": true,
             "dual_beacon": true,
             "rainbow_beacon": true,
-            "solid_reactive_simple": true,
             "solid_reactive": true,
-            "solid_reactive_wide": true,
-            "solid_reactive_cross": true,
-            "solid_reactive_nexus": true,
-            "multisplash": true
+            "solid_reactive_multiwide": true,
+            "multisplash": true,
+            "starlight": true,
+            "riverflow":true
         },
         "layout":[
             { "flags": 4, "matrix": [0, 0],  "x":  0, "y": 0 },
