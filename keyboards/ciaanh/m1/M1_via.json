@@ -34,12 +34,11 @@
                   ["CYCKE_SPIRAL", 10],
                   ["DUAL_BEACON", 11],
                   ["RAINBOW_BEACON", 12],
-                  ["SOLID_REACTIVE_SIMPLE", 13],
-                  ["SOLID_REACTIVE", 14],
-                  ["SOLID_REACTIVE_WIDE", 15],
-                  ["SOLID_REACTIVE_CROSS", 16],
-                  ["SOLID_REACTIVE_NEXUS", 17],
-                  ["MATRIX_MULTISPLASH", 18] 
+                  ["SOLID_REACTIVE", 13],
+                  ["SOLID_REACTIVE_MULTIWIDE", 14],
+                  ["MATRIX_MULTISPLASH", 15],
+                  ["STARLIGHT", 16],
+                  ["RIVERFLOW", 17]
                 ]
               },
               {

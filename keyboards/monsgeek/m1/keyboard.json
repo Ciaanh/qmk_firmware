@@ -49,7 +49,6 @@
     },
     "rgb_matrix": {
         "driver": "snled27351",
-        "center_point": [90, 28],
         "max_brightness": 200,
         "val_steps": 20,
         "animations": {
