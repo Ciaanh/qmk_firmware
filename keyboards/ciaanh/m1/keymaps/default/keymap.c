@@ -90,18 +90,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          _______,
         XXXXXXX,C(KC_F1),C(KC_F2),C(KC_F3),C(KC_F4),C(KC_F5), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
         _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,
-        XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,               XXXXXXX,
-        _______,C(KC_F6),C(KC_F7),C(KC_F8),C(KC_F9),C(KC_F10),XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,          _______, XXXXXXX,
+        XXXXXXX,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX,               KC_PGUP,
+        _______,C(KC_F6),C(KC_F7),C(KC_F8),C(KC_F9),C(KC_F10),XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,          _______, KC_PGDN,
         _______, _______, _______,                   _______,                            XXXXXXX, _______, XXXXXXX,          _______, _______, _______),
 
     
     [_FUNCTIONS] = LAYOUT_ansi(
-        _______,   TO_BL,   TG_CL,  TG_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RGB_TOG,
+        _______,   TO_BL,   TG_CL,  TG_WoW, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, _______,           RM_TOGG,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, KC_INS,  _______, KC_PSCR, _______, _______, RGB_MOD,           RGB_VAI,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOG, _______, _______,      RGB_SPI,               RGB_VAD,
-        _______, _______, _______, KC_CALC, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______,          RGB_SPD,           RGB_HUI, _______,
-        _______, GU_TOGG, _______,                   _______,                            _______, _______, _______,          RGB_SAD,  RGB_HUD, RGB_SAI)
+        _______, _______, _______, _______, _______, _______, _______, _______, KC_INS,  _______, KC_PSCR, _______, _______, RM_NEXT,           RM_VALU,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, RM_TOGG, _______, _______,      RM_SPDU,               RM_VALD,
+        _______, _______, _______, KC_CALC, _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______,          RM_SPDD,           RM_HUEU, _______,
+        _______, GU_TOGG, _______,                   _______,                            _______, _______, _______,          RM_SATD,  RM_HUED, RM_SATU)
 };
 
 
@@ -111,7 +111,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [_BASE] = { ENCODER_CCW_CW(KC_VOLU, KC_VOLD) },
     [_CUSTOM] = { ENCODER_CCW_CW(KC_VOLU, KC_VOLD) },
     [_WOW] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN) },
-    [_FUNCTIONS] = { ENCODER_CCW_CW(RGB_MOD, RGB_RMOD) }
+    [_FUNCTIONS] = { ENCODER_CCW_CW(RM_NEXT, RM_PREV) }
 };
 #endif
 
