@@ -32,7 +32,8 @@
 #define SNLED27351_I2C_ADDRESS_2 SNLED27351_I2C_ADDRESS_VDDIO
 
 /* RGB LEDs: 4-pin common-anode RGB SMD LEDs, south-facing reverse mount
- * (3528 body, sold as "6028 reverse mount RGB"). Each LED uses one CA line
+ * (SK6812MINI-E-sized body, sold as "6028 reverse mount RGB"; the addressable
+ * SK6812MINI-E itself does not work here). Each LED uses one CA line
  * (anode) and three CB lines (R, G, B cathodes), see m1.c. See readme.md. */
 
 /* Current tune per CB line (CB1..CB12 = R, G, B, R, G, B, ...).

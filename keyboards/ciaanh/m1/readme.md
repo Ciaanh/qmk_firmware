@@ -27,14 +27,20 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 |------|-------|
 | LED type | 4-pin RGB SMD LED, **common anode** |
 | Mounting | South-facing, **reverse-mount** (LED body sits in the PCB cut-out under the switch and shines up through the hole) |
-| Package | 3528 reverse-mount body on a ~6.0 x 2.8 mm lead frame, sold as "6028 reverse mount RGB" or "3528 reverse mount RGB" (measure the footprint on the board before ordering) |
+| Package | Same reverse-mount body as the SK6812MINI-E (about 3.2 x 2.8 mm, 4 pins), sold as "6028 reverse mount RGB" |
 | Driver | 2x Sonix SNLED27351 matrix drivers on I2C (addresses 0x74 / GND and 0x77 / VDDIO), see `config.h` and `m1.c` |
 | Count | 84 per-key LEDs + 22 side LEDs (11 left, 11 right) |
 
 How this was determined: `m1.c` wires every LED as one CA (anode, shared) line plus three CB (cathode) lines
 for R, G and B. The SNLED27351 only drives LEDs this way, so any replacement must be **common anode**;
-a common-cathode or addressable (WS2812 / SK6812) LED will not work. The south-facing reverse-mount
-position comes from MonsGeek's product description. The exact vendor part number is not published by
+a common-cathode or addressable (WS2812 / SK6812) LED will not work.
+
+**The SK6812MINI-E itself is not compatible.** It looks identical but is an addressable LED (pins VDD, DOUT,
+GND, DIN) that needs a data signal. Buy the non-addressable "6028 reverse mount RGB, common anode" version.
+To check a part or the board pads with a multimeter in diode mode: with the red probe on the common
+pin (anode), touching the black probe to each of the other three pins lights red, green and blue.
+
+The south-facing reverse-mount position comes from MonsGeek's product description. The exact vendor part number is not published by
 MonsGeek, so match the package and pinout of a working LED on the same board.
 
 When soldering a replacement, check the pin 1 / anode mark against a neighbouring LED: a rotated LED
