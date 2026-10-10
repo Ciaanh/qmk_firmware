@@ -31,6 +31,15 @@
 #define SNLED27351_I2C_ADDRESS_1 SNLED27351_I2C_ADDRESS_GND
 #define SNLED27351_I2C_ADDRESS_2 SNLED27351_I2C_ADDRESS_VDDIO
 
+/* RGB LEDs: 4-pin common-anode RGB SMD LEDs, south-facing reverse mount
+ * (3528 body, sold as "6028 reverse mount RGB"). Each LED uses one CA line
+ * (anode) and three CB lines (R, G, B cathodes), see m1.c. See readme.md. */
+
+/* Current tune per CB line (CB1..CB12 = R, G, B, R, G, B, ...).
+ * Not set: the driver default is 0xFF on every channel (maximum current).
+ * Uncomment to run the LEDs at a lower current, which lowers brightness. */
+// #define SNLED27351_CURRENT_TUNE { 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0, 0xA0 }
+
 #define I2C1_OPMODE OPMODE_I2C
 #define I2C1_CLOCK_SPEED 400000 /* 400000 */
 
