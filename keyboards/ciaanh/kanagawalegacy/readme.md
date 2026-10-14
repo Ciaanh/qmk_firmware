@@ -11,6 +11,6 @@ A 75% keyboard with oled and rotary encoder for Elite-C
 
 Make example for this keyboard (after setting up your build environment):
 
-    qmk compile -kb ciaanh/kanagawa -km default
+    qmk compile -kb ciaanh/kanagawalegacy/rev1 -km default
 
 Driver issues https://docs.qmk.fm/#/faq_build?id=unknown-device-for-dfu-bootloader

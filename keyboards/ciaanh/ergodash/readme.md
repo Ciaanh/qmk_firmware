@@ -9,12 +9,12 @@ Hardware Availability: Order your own [yourself](https://github.com/omkbd/ErgoDa
 
 Make example for this keyboard (after setting up your build environment):
 
-    make omkbd/ergodash/rev1:default
+    qmk compile -kb ciaanh/ergodash/rev1 -km default
 
 See [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) then the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information.
 
 Install Example: (for pro micro)
-    `make omkbd/ergodash/rev1:default:avrdude`
+    `qmk flash -kb ciaanh/ergodash/rev1 -km default`
 
 Note:  
   "rev1" is for PCB ver 1.0,1.1,1.2  

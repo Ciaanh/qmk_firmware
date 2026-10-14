@@ -1,5 +1,8 @@
+// Copyright 2026 Ciaanh (@Ciaanh)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include QMK_KEYBOARD_H
-#include "keycodes.h"
+#include "keymap_defs.h"
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -15,17 +18,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+-------+------+------+------+------+          +-------+-------+-------+           +------+------+------+------+------+--------+ Enter  |
      * | LShift |   Z   |  X   |  C   |  V   |  B   |          | Pad_1 | Pad_2 | Pad_3 |           |  N   |  M   |  ,   |  .   |  /   | RShift |        |
      * |--------+-------+------+------+------+------+------+   +-------+-------+-------+    +------+------+------+------+------+------+--------+--------|
-     * | LCtrl  |  GUI  | LAlt | RAlt |  Del |      | L_LFT|   |KC_NLCK| Pad_0 |KC_PDOT|    | L_RGT|      | Space|      | TO_FN|               | _TOOLS  |
+     * | LCtrl  |  GUI  | LAlt | RAlt |  Del |      | L_LFT|   |KC_NUM| Pad_0 |KC_PDOT|    | L_RGT|      | Space|      | TO_FN|               | _TOOLS  |
      * `-------------------------------------'      `------'   `-----------------------'    `------'      `------'      `------'               `--------'
      *
      */
 
-    [_BASE] = LAYOUT_Pallas( \
+    [_BASE] = LAYOUT( \
         KC_ESC ,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,                                      KC_7,    KC_8,    KC_9,    KC_0, KC_MINS,  KC_EQL, KC_BSLS,  KC_GRV , \
         KC_TAB ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                  KC_P7, KC_P8,  KC_P9,                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_LBRC,  KC_RBRC, \
         KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                  KC_P4, KC_P5,  KC_P6,                 KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,   KC_ENT, \
         KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                  KC_P1, KC_P2,  KC_P3,                 KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,           \
-        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT, KC_BSPC,            L_LFT,       KC_NLCK, KC_P0,KC_PDOT,        L_RGT, KC_SPC,            TO_FN,                             L_TOOLS  \
+        KC_LCTL, KC_LGUI, KC_LALT, KC_RALT, KC_BSPC,            L_LFT,       KC_NUM, KC_P0,KC_PDOT,        L_RGT, KC_SPC,            TO_FN,                             L_TOOLS  \
     ),
 
 
@@ -45,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
 
-    [_FN] = LAYOUT_Pallas(
+    [_FN] = LAYOUT(
         _______, _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                 KC_F10, KC_F11, KC_F12,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F7,  KC_F8,  KC_F9,               _______, _______, _______, _______, _______, _______, _______, \
@@ -84,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-------------------------------------'      `-------'    `---------------------'   `------'      `------'      `-------'               `--------'
      *
      */
-     [_VS] = LAYOUT_Pallas(
+     [_VS] = LAYOUT(
         _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F5,  KC_F10,  KC_F11,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                  KC_F9,   VS_QW, SC_SF12,               _______, _______, _______, _______, _______, _______, _______, \
@@ -122,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-------------------------------------'      `-------'   `----------------------'    `------'      `------'      `-------'               `--------'
      *
      */
-     [_CODE] = LAYOUT_Pallas(
+     [_CODE] = LAYOUT(
         _______, _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                VSC_TRM, XXXXXXX, VSC_COM,               _______, _______, _______, _______, _______, _______, _______, \
         _______, _______, _______, _______, _______, _______,                XXXXXXX, XXXXXXX, SC_SF12,               _______, _______, _______, _______, _______, _______, _______, \
@@ -136,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Keymap: TOOLS
     *
     * ,----------------------------------------------------                             -----------------------------------------------------------------.
-    * |        |       |      |      |      |      |      |                             |TD_PSCR|      |      |      |BLToggle|RGBToggl| RGB_MOD|        |
+    * |        |       |      |      |      |      |      |                             |TD_PSCR|      |      |      |BLToggle|RGBToggl| UG_NEXT|        |
     * |--------+-------+------+------+------+------+------+    ,------+------+------.   +-------+------+------+------+--------+--------+--------+--------|
     * |        |       |      |      |      |      |           |      |      |      |           |      |      |      |  Step  |Hue Inc |Hue Dec |        |
     * |--------+-------+------+------+------+------+           +------+------+------+           +------+------+------+--------+--------+--------+--------|
@@ -148,11 +151,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * `-------------------------------------'      `-------'   `--------------------'    `------'      `------'      `--------'                 `--------'
     *
     */
-    [_TOOLS] = LAYOUT_Pallas(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BL_TOGG, RGB_TOG, RGB_MOD, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, BL_STEP, RGB_HUI, RGB_HUD, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_INC, RGB_SAI, RGB_SAD, XXXXXXX, \
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_DEC, RGB_VAI, RGB_SPD,          \
+    [_TOOLS] = LAYOUT(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BL_TOGG, UG_TOGG, UG_NEXT, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX, BL_STEP, UG_HUEU, UG_HUED, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_UP, UG_SATU, UG_SATD, XXXXXXX, \
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                XXXXXXX, XXXXXXX, XXXXXXX,               XXXXXXX, XXXXXXX, XXXXXXX,  BL_DOWN, UG_VALU, UG_SPDD,          \
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX,          XXXXXXX,          BL_BRTG,                   L_TOOLS  \
     ),
 
@@ -175,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
 
-    [_LEFT] = LAYOUT_Pallas(
+    [_LEFT] = LAYOUT(
         _______, _______, _______, _______, _______, _______, _______,                                        _______, _______, _______, _______, _______, _______, _______, _______, \
         _______, _______,  KC_UP , _______, _______, KC_HOME,                 _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
         _______, KC_LEFT, KC_DOWN,KC_RIGHT, _______,  KC_END,                 _______, _______, _______,               _______, _______, _______, _______, _______, _______, _______, \
@@ -201,7 +204,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      */
 
-    [_RIGHT] = LAYOUT_Pallas(
+    [_RIGHT] = LAYOUT(
         _______, _______, _______, _______, _______, _______, _______,                                        _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______, KC_PSCR,_SCREENSHOT, \
         _______, _______, _______, _______, _______, _______,                 _______, _______, _______,               KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, _______,    _______, \
         _______, _______, _______, _______, _______, _______,                 _______, _______, _______,               _______, _______, _______, _______, _______, _______,    _______, \

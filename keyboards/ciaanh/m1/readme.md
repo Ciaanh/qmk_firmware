@@ -8,11 +8,11 @@ A customizable 75% encoder keyboard.
 
 Make example for this keyboard (after setting up your build environment):
 
-    make monsgeek/m1:default
+    make ciaanh/m1:default
 
 Flashing example for this keyboard:
 
-    make monsgeek/m1:default:flash
+    make ciaanh/m1:default:flash
     
 **Reset Key**: Hold down the key located at *K00*, which programmed as *Esc* while plugging in the keyboard.
 
